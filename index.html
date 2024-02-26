@@ -70,6 +70,16 @@
       document.getElementById('primes').innerText = primes.join(', ')+ ' \n Total = '+ primes.length;
       
     })
+
+    document.getElementById('divisor_number').addEventListener('click', function(){
+      this.value = "";
+    })
+    document.getElementById('pr_from').addEventListener('click', function(){
+      this.value = "";
+    })
+    document.getElementById('pr_to').addEventListener('click', function(){
+      this.value = "";
+    })
     
     function get_divisors(number){
       let divisors = Array();
