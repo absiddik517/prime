@@ -15,11 +15,8 @@
     <h2>Find devisors</h2>
     <form id="divisor_finder">
       <div class="row">
-        <div class="col-10">
+        <div class="col-12">
           <input id="divisor_number" placeholder="Input number to find devisors" type="number" class="form-control">
-        </div>
-        <div class="col-2 d-flex justify-content-end">
-          <input type="submit" class="btn btn-dark" value="Find">
         </div>
       </div>
     </form>
@@ -27,14 +24,11 @@
     <h2 class="mt-5">Prime numbers in a range</h2>
     <form id="prime_form">
       <div class="row">
-        <div class="col-5">
+        <div class="col-6">
           <input type="number" id="pr_from" placeholder="From" class="form-control">
         </div>
-        <div class="col-5">
+        <div class="col-6">
           <input type="number" id="pr_to" placeholder="To" class="form-control">
-        </div>
-        <div class="col-2">
-          <input type="submit" value="Get" class="btn btn-dark">
         </div>
       </div>
     </form>
@@ -42,35 +36,6 @@
   </div>
   
   <script>
-    document.getElementById('divisor_finder').addEventListener('submit', function(e){
-      e.preventDefault();
-      let number = document.getElementById('divisor_number').value
-      if(number){
-        let divisors = get_divisors(number);
-        console.log(divisors.length)
-        divisors.length == 0 ? document.getElementById('divisors').innerText = `${number} is a prime number.` : document.getElementById('divisors').innerText = divisors.join(', ');
-      }
-    })
-    
-    document.getElementById('prime_form').addEventListener('submit', function(event){
-      event.preventDefault();
-      let from = document.getElementById('pr_from').value*1;
-      let to = document.getElementById('pr_to').value*1;
-      console.log(from, to)
-      let primes = Array();
-      if(from && to && from < to) {
-        for(let i = from; i <= to; i++){
-          if(i==1) continue;
-          if(get_divisors(i).length == 0){
-            primes.push(i)
-          }
-        }
-      }
-      console.log(primes)
-      document.getElementById('primes').innerText = primes.join(', ')+ ' \n Total = '+ primes.length;
-      
-    })
-
     document.getElementById('divisor_number').addEventListener('click', function(){
       this.value = "";
     })
@@ -80,6 +45,45 @@
     document.getElementById('pr_to').addEventListener('click', function(){
       this.value = "";
     })
+    document.getElementById('divisor_finder').addEventListener('submit', function(e){
+      e.preventDefault();
+      divisorfn();
+    })
+    document.getElementById('divisor_number').addEventListener('blur', divisorfn)
+    document.getElementById('pr_from').addEventListener('blur', primefn)
+    document.getElementById('pr_to').addEventListener('blur', primefn)
+    
+    function divisorfn(){
+      let number = document.getElementById('divisor_number').value
+      if(number){
+        let divisors = get_divisors(number);
+        console.log(divisors.length)
+        divisors.length == 0 ? document.getElementById('divisors').innerText = `${number} is a prime number.` : document.getElementById('divisors').innerText = divisors.join(', ');
+      }
+    }
+    
+    document.getElementById('prime_form').addEventListener('submit', function(event){
+      event.preventDefault();
+      primefn();
+    })
+    
+    function primefn(){
+      let from = document.getElementById('pr_from').value*1;
+      let to = document.getElementById('pr_to').value*1;
+      console.log(from, to)
+      let primes = Array();
+      if(from && to && from < to) {
+        for(let i = from; i <= to; i++){
+          if(i==1) continue;
+          console.log(get_divisors(i))
+          if(get_divisors(i).length == 0){
+            primes.push(i)
+          }
+        }
+      console.log(primes)
+      document.getElementById('primes').innerText = primes.join(', ')+ ' \n Total = '+ primes.length;
+      }
+    }
     
     function get_divisors(number){
       let divisors = Array();
