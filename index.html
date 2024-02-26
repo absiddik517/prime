@@ -54,8 +54,8 @@
     
     document.getElementById('prime_form').addEventListener('submit', function(event){
       event.preventDefault();
-      let from = document.getElementById('pr_from').value;
-      let to = document.getElementById('pr_to').value;
+      let from = document.getElementById('pr_from').value*1;
+      let to = document.getElementById('pr_to').value*1;
       console.log(from, to)
       let primes = Array();
       if(from && to && from < to) {
