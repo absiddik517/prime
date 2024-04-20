@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Prime numbers & Devisors</title>
-  <meta description="A.B. Siddik">
+  <title>Document</title>
+  <meta description="nfpgz">
   <meta description="Prime numbers finder">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -13,6 +13,7 @@
   
   <div class="container">
     <h2>Find devisors</h2>
+    
     <form id="divisor_finder">
       <div class="row">
         <div class="col-12">
@@ -31,8 +32,57 @@
           <input type="number" id="pr_to" placeholder="To" class="form-control">
         </div>
       </div>
+    <div class="px-2 py-3 border mt-2 border-radius-2" id="primes"></div>
     </form>
-    <div class="px-2 py-3 border mt-2 border-radius-2" id="primes">&nbsp;</div>
+    <h2 class="mt-5">GCD</h2>
+    <form id="">
+      <div class="row">
+        <div class="col-6">
+          <input type="number" id="gcdf" placeholder="From" class="form-control">
+        </div>
+        <div class="col-6">
+          <input type="number" id="gcdt" placeholder="To" class="form-control">
+        </div>
+      </div>
+    <div class="px-2 py-3 border mt-2 border-radius-2" id="gcd">&nbsp;</div>
+    </form>
+    <h2 class="mt-5">GCD of fraction</h2>
+    <form id="">
+      <div class="row">
+        <div class="col-6">
+          <input type="text" id="gcdff" placeholder="From" class="form-control">
+        </div>
+        <div class="col-6">
+          <input type="text" id="gcdft" placeholder="To" class="form-control">
+        </div>
+      </div>
+    <div class="px-2 py-3 border mt-2 border-radius-2" id="gcdoutput"></div>
+    </form>
+    <h2 class="mt-5">LCM</h2>
+    <form id="">
+      <div class="row">
+        <div class="col-6">
+          <input type="number" id="lcmf" placeholder="From" class="form-control">
+        </div>
+        <div class="col-6">
+          <input type="number" id="lcmt" placeholder="To" class="form-control">
+        </div>
+      </div>
+    <div class="px-2 py-3 border mt-2 border-radius-2" id="lcm">&nbsp;</div>
+    </form>
+    <h2 class="mt-5">LCM of fraction</h2>
+    <form id="">
+      <div class="row">
+        <div class="col-6">
+          <input type="text" id="lcmff" placeholder="From" class="form-control">
+        </div>
+        <div class="col-6">
+          <input type="text" id="lcmft" placeholder="To" class="form-control">
+        </div>
+      </div>
+    <div class="px-2 py-3 border mt-2 border-radius-2" id="lcmfo"></div>
+    </form>
+    
   </div>
   
   <script>
@@ -52,12 +102,17 @@
     document.getElementById('divisor_number').addEventListener('blur', divisorfn)
     document.getElementById('pr_from').addEventListener('blur', primefn)
     document.getElementById('pr_to').addEventListener('blur', primefn)
+    document.getElementById('gcdt').addEventListener('blur', gcd)
+    document.getElementById('gcdft').addEventListener('blur', gcdf)
+    document.getElementById('lcmt').addEventListener('blur', lcm)
+    document.getElementById('lcmft').addEventListener('blur', lcmf)
     
     function divisorfn(){
       let number = document.getElementById('divisor_number').value
       if(number){
         let divisors = get_divisors(number);
-        divisors.length == 0 ? document.getElementById('divisors').innerText = `${number} is a prime number.` : document.getElementById('divisors').innerText = divisors.join(', ')+"\n Total= "+ divisors.length;
+        console.log(divisors.length)
+        divisors.length == 0 ? document.getElementById('divisors').innerText = `${number} is a prime number.` : document.getElementById('divisors').innerText = divisors.join(', ');
       }
     }
     
@@ -69,7 +124,7 @@
     function primefn(){
       let from = document.getElementById('pr_from').value*1;
       let to = document.getElementById('pr_to').value*1;
-      console.log(from, to)
+      //console.log(from, to)
       let primes = Array();
       if(from && to && from < to) {
         for(let i = from; i <= to; i++){
@@ -79,6 +134,7 @@
             primes.push(i)
           }
         }
+      console.log(primes)
       document.getElementById('primes').innerText = primes.join(', ')+ ' \n Total = '+ primes.length;
       }
     }
@@ -93,7 +149,144 @@
       return divisors;
     }
     
+    function gcd(){
+      let num1= document.getElementById('gcdf').value*1;
+      let num2= document.getElementById('gcdt').value*1;
+      if(num2==0 || num1 == 0){
+        document.getElementById('gcd').innerHTML = "Number should be non zero positive integer."
+        return;
+      }
+      let store = Array();
+      for(let i=1; i<=Math.min(num1, num2); i++){
+        if(num1%i==0 && num2%i==0){
+          store.push(i);
+        }
+      }
+      output = `Common devisors of ${num1} and ${num2}: <b>${store.join(', ')}</b> <br> <b>GCD is : ${store[store.length-1]}</b>`;
+      document.getElementById('gcd').innerHTML = output;
+    }
+    function gcdf(){
+      let num1= eval(document.getElementById('gcdff').value);
+      let num2= eval(document.getElementById('gcdft').value);
+      let data = cdf(num1, num2);
+      let store = floatToFraction(data[1]);
+      let output = `Common devisors are: <b>\(${store.join(', ')}\)</b> <br> <b>GCD is : ${store[0]}</b> <br> In ${data[0]} loops`;
+      console.log(output)
+      document.getElementById('gcdoutput').innerHTML = output;
+    }
+    function cdf(num1, num2){
+      let output = [0, []]; let loop = 0;
+      let num1arr = Array(); let num2arr = Array();
+      for(let i = 1; i <= 1000000; i++){
+        num1arr.push(num1/i); num2arr.push(num2/i);
+        if(countDuplicates(num1arr, num2arr) >= 10) {
+          loop = i;
+          break;
+        }
+      }
+      output[0] = loop;
+      for(let i = 0; i < num1arr.length; i++){
+        if(num2arr.indexOf(num1arr[i]) >= 0){
+          output[1].push(num1arr[i]);
+        }
+      }
+      return output;
+    }
+    function lcm(){
+      let num1= document.getElementById('lcmf').value*1;
+      let num2= document.getElementById('lcmt').value*1;
+      if(num2==0 || num1 == 0){
+        document.getElementById('lcm').innerHTML = "Number should be non zero positive integer."
+        return;
+      }
+      let store = cm(num1, num2);
+      output = `Common multiple of ${num1} and ${num2}: <i>${store.join(', ')}</i> <br> <b>GCD is : ${store[0]}</b>`;
+      document.getElementById('lcm').innerHTML = output;
+    }
+    function cm(num1, num2){
+      let output = Array(); let num1arr = Array(); let num2arr = Array();
+      for(let i = 1; i <= 1000000; i++){
+        num1arr.push(num1*i); num2arr.push(num2*i);
+        if(countDuplicates(num1arr, num2arr) >= 10) break;
+      }
+      for(let i = 0; i <= num1arr.length; i++){
+        if(num2arr.indexOf(num1arr[i]) >= 0){
+          output.push(num1arr[i]);
+        }
+      }
+      return output;
+    }
+    function lcmf(){
+      let num1= eval(document.getElementById('lcmff').value);
+      let num2= eval(document.getElementById('lcmft').value);
+      let data = cmf(num1, num2);
+      let store = floatToFraction(data[1])
+      let output = `Common multiple are: <i>${store.join(', ')}</i> <br> <b>LCM is : ${store[0]}</b> <br> In ${data[0]} loops.`;
+      console.log(output)
+      document.getElementById('lcmfo').innerHTML = output;
+    }
+    function cmf(num1, num2){
+      let output = [0, []];
+      let num1arr = Array(); let num2arr = Array();
+      for(let i = 1; i <= 1000000; i++){
+        num1arr.push(num1*i); num2arr.push(num2*i);
+        if(countDuplicates(num1arr, num2arr) >= 10) {
+          output[0] = i; break;
+        }
+      }
+      for(let i = 0; i < num1arr.length; i++){
+        if(num2arr.indexOf(num1arr[i]) >= 0){
+          output[1].push(num1arr[i]);
+        }
+      }
+      return output;
+    }
     
+    
+    function floatToFraction(floatArray) {
+      function gcd(a, b) {
+          return b ? gcd(b, a % b) : a;
+      }
+  
+      function toFraction(floatNum) {
+          const tolerance = 1.0E-6;
+          let h1 = 1;
+          let h2 = 0;
+          let k1 = 0;
+          let k2 = 1;
+          let b = floatNum;
+          do {
+              let a = Math.floor(b);
+              let aux = h1;
+              h1 = a * h1 + h2;
+              h2 = aux;
+              aux = k1;
+              k1 = a * k1 + k2;
+              k2 = aux;
+              b = 1 / (b - a);
+          } while (Math.abs(floatNum - h1 / k1) > floatNum * tolerance);
+          if(k1 == 1){
+            return h1;
+          } else {
+            return h1 + "/" + k1;
+          }
+      }
+  
+      return floatArray.map(toFraction);
+}
+    function countDuplicates(arr1, arr2) {
+        // Create sets to store unique elements
+        let set1 = new Set(arr1);
+        let set2 = new Set(arr2);
+        let count = 0;
+        // Iterate through one array and count occurrences in the other array
+        for (let element of set1) {
+            if (set2.has(element)) {
+                count++;
+            }
+        }
+        return count;
+    }
   </script>
 </body>
 </html>
