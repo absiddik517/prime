@@ -171,7 +171,6 @@
       let data = cdf(num1, num2);
       let store = floatToFraction(data[1]);
       let output = `Common devisors are: <b>\(${store.join(', ')}\)</b> <br> <b>GCD is : ${store[0]}</b> <br> In ${data[0]} loops`;
-      console.log(output)
       document.getElementById('gcdoutput').innerHTML = output;
     }
     function cdf(num1, num2){
@@ -200,7 +199,7 @@
         return;
       }
       let store = cm(num1, num2);
-      output = `Common multiple of ${num1} and ${num2}: <i>${store.join(', ')}</i> <br> <b>GCD is : ${store[0]}</b>`;
+      output = `Common multiple of ${num1} and ${num2}: <i>${store.join(', ')}</i> <br> <b>LCM is : ${store[0]}</b>`;
       document.getElementById('lcm').innerHTML = output;
     }
     function cm(num1, num2){
