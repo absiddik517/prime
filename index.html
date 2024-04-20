@@ -170,7 +170,7 @@
       let num2= eval(document.getElementById('gcdft').value);
       let data = cdf(num1, num2);
       let store = floatToFraction(data[1]);
-      let output = `Common devisors are: <i>\(${store.join(', ')}\)</i> <br> <b>GCD is : ${store[0]}</b> <br> In ${data[0]} loops`;
+      let output = `Common devisors are: <i>${store.join(', ')}</i> <br> <b>GCD is : ${store[0]}</b> <br> In ${data[0]} loops`;
       document.getElementById('gcdoutput').innerHTML = output;
     }
     function cdf(num1, num2){
