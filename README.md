@@ -1,2 +1,4 @@
-# prime
-This page help you finding prime munbers and determine a number if it is prime or not.
+# Math Assistant 
+<a href="https://absiddik517.github.io/prime/">
+Click here
+</a>
